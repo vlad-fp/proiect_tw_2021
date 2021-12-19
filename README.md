@@ -10,4 +10,4 @@ Quote Manager integrat cu Google Translate
 ### Instalare
 
 1. npm install
-2. node app.js
+2. node src/api.js
