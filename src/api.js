@@ -17,26 +17,34 @@ router.route("/languages/:id")
 });
 
 router.route("/languages")
-.post(async ({ body }, res) => {
+.post(async function createLanguage(req, res)  {
     try {
-        await operations.createLanguage(body);
-        res.status(200).json("Success!")
+        await operations.createLanguage(req.body);
+        res.status(201).json("Success!")
     } catch (err) {
-        console.error("Error creating language.");
+        console.error(req.statusMessage);
     }
 });
 
 router.route("/languages/:id")
-.put(async ({ body }, res) => {
+.put(async ({ body, params: {id}}, res) => {
     try {
-        await operations.update(body);
+        await operations.updateLanguage(id, body);
         res.status(200).json("Success!")
     } catch (err) {
-        console.error("Error updating language.");
+        console.error(err);
     }
 });
 
-
+router.route("/languages/:id")
+.delete(async ({ params: { id }}, res) => {
+    try {
+        await operations.deleteLanguage(id);
+        res.status(200).json(`Success! Deleted language with id ${id}!`);
+    } catch (err) {
+        console.error(err);
+    }
+});
 
 router
 .route("/categories")
@@ -64,4 +72,36 @@ router
 .get(async (_, res) => {
     const result = await operations.getQuotes();
     res.status(200).json(result);
+});
+
+router
+.route("/quotes/:id")
+.get(async ({params: {id}}, res) => {
+    const result = await operations.getQuote(id);
+    res.status(200).json(result);
+});
+
+router
+.route("/quotes")
+.post(async ({body}, res) => {
+    try {
+        await operations.createQuote(body);
+        res.status(200).json("Success!");
+    } catch(err) {
+        console.log(err);
+    }
+});
+
+router
+.route("/quotes/:id")
+.put(async ({body, params: {id}}, res) => {
+    await operations.updateQuote(id, body);
+    res.status(200).json("Success!");
+});
+
+router
+.route("/quotes/:id")
+.delete(async ({params: {id}}, res) => {
+    await operations.deleteQuote(id);
+    res.status(200).json("Deleted quote");
 });

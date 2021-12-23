@@ -159,6 +159,7 @@ async function createLanguage(language)
     return await execAsyncRequest(
         async function createLanguage() {
             return await Languages.create({
+                code: language.code,
                 name: language.name
             });
         }
@@ -171,7 +172,8 @@ async function updateLanguage(id, language)
         async function updateLanguage() {
             const lang = await Languages.findByPk(id);
             if (lang) {
-                await lang.update({
+                return await lang.update({
+                    code: language.code,
                     name: language.name
                 });
             }

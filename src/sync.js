@@ -103,6 +103,4 @@ Categories.hasMany(Quotes);
 Quotes.belongsTo(Languages);
 Languages.hasMany(Quotes);
 
-operations.init(sequelizeConnection);
-
 export { sequelizeConnection };
